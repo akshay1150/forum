@@ -14,7 +14,7 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&account)
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w, "unable to decode json", http.StatusBadRequest)
+		http.Error(w, "unable to decode json data", http.StatusBadRequest)
 		return
 	}
 
