@@ -14,8 +14,8 @@ type Account struct {
 	//Token    string `json:"token" bson:"token"`
 }
 
-type Token struct {
-	UserId uint
+type Claims struct {
+	Username string `json:"username"`
 	jwt.StandardClaims
 }
 
@@ -62,3 +62,9 @@ func (acc *Account) validate() error {
 	}
 	return nil
 }
+
+// func (acc *Account) Login() error {
+
+// 	acc.FindUser()
+
+// }
