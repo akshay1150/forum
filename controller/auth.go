@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/forum/models"
@@ -21,7 +22,8 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 
 	_, err := account.CreateAccount()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		fmt.Println(err)
+		http.Error(w, "unable to decode json data", http.StatusBadRequest)
 		return
 	}
 	//	w.WriteHeader(http.StatusCreated)
