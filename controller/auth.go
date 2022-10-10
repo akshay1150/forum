@@ -1,7 +1,10 @@
 package controller
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/forum/models"
@@ -23,7 +26,11 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 	_, err := account.CreateAccount()
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w, "unable to decode json data", http.StatusBadRequest)
+		er := map[string]interface{}{"err": errors.New(err.Error())}
+		//http.Error(w, "unable to decode json data", http.StatusBadRequest)
+		w.Header().Set("Content-type", "application/json")
+
+		json.NewEncoder(w).Encode(er)
 		return
 	}
 	//	w.WriteHeader(http.StatusCreated)
@@ -34,7 +41,6 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 }
 
 func Auth(w http.ResponseWriter, r *http.Request) {
-
 	_ = r.ParseForm()
 	var ac models.Account
 	ac.Email = r.FormValue("email")
@@ -54,4 +60,7 @@ func Auth(w http.ResponseWriter, r *http.Request) {
 		Expires: tk.Expires,
 	})
 	w.Write([]byte("user logged in succesfully"))
+}
+func Welcome(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("welcome user"))
 }
