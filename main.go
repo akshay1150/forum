@@ -16,6 +16,7 @@ func main() {
 	router.HandleFunc("/signup", controller.CreateAccount)
 	router.HandleFunc("/login", controller.Login)
 	router.HandleFunc("/auth", controller.Auth)
+	router.HandleFunc("/welcome", controller.IsAuthorized(controller.Welcome))
 
 	err := http.ListenAndServe("0.0.0.0:8080", router)
 	if err != nil {

@@ -57,7 +57,7 @@ func (ac *Account) FindOne() (string, error) {
 
 func (ac *Account) FindUser() (TokenData, error) {
 	col := GetDB().Database("employee").Collection("user")
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 	result := col.FindOne(ctx, bson.M{"email": ac.Email})
 	// if err != nil {
 	// 	return "", errors.New("errro in insert operation")
@@ -86,7 +86,6 @@ func (ac *Account) FindUser() (TokenData, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	// Create the JWT string
 	tokenString, err := token.SignedString([]byte("mysecretkey"))
-	fmt.Println("*****token****", tokenString)
 	log.Println(err)
 	if err != nil {
 		// If there is an error in creating the JWT return an internal server error
